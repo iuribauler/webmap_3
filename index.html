@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="mapbox/mapbox-gl.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+            <nav id="menu"></nav>
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="./mapbox/mapbox-gl.js"></script>
+        <script src="data/Publication_Favelas_1999_1.js"></script>
+<script src="./mapbox/style.js"></script>
+<script src="./js/Autolinker.min.js"></script>
+<script>
+var map = new mapboxgl.Map({
+ container: 'map',
+ style: styleJSON,
+ center: [-43.2492654507588,-22.99015549242855],
+ zoom: 12,
+ bearing: 360.0,
+ attributionControl: false
+});
+map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+map.addControl(new mapboxgl.AttributionControl({
+    customAttribution: '<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://github.com/mapbox/mapbox-gl-js" target="_blank">Mapbox GL JS</a> &middot; <a href="https://qgis.org" target="_blank">QGIS</a>',
+    compact: false
+}));
+
+map.on('click', 'lyr_Publication_Favelas_1999_1_0', function (e) {
+    var description = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['OBJECTID'] !== null ? Autolinker.link(e.features[0].properties['OBJECTID'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['Código'] !== null ? Autolinker.link(e.features[0].properties['Código'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['Nome'] !== null ? Autolinker.link(e.features[0].properties['Nome'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['SMH"RIO\02479574"Lim_Favelas_1999Area'] !== null ? Autolinker.link(e.features[0].properties['SMH"RIO\02479574"Lim_Favelas_1999Area'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['ShapeSTArea'] !== null ? Autolinker.link(e.features[0].properties['ShapeSTArea'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['ShapeSTLength'] !== null ? Autolinker.link(e.features[0].properties['ShapeSTLength'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['publications'] !== null ? Autolinker.link(e.features[0].properties['publications'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>'
+
+    new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(description)
+        .addTo(map);
+});
+
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'lyr_Publication_Favelas_1999_1_0', function () {
+    map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'lyr_Publication_Favelas_1999_1_0', function () {
+    map.getCanvas().style.cursor = '';
+});
+</script>
+    </body>
+</html>
